@@ -64,6 +64,11 @@ fun IsiProfil() {
                 )
             }
 
+            btnNext.setOnClickListener{
+                val next = Intent(context, ThirdActivity::class.java)
+                context.startActivity(next)
+            }
+
             val header = TextView(context).apply {
                 id = View.generateViewId()
                 text ="Profile"

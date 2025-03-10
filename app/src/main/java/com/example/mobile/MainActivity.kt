@@ -1,6 +1,5 @@
 package com.example.mobile
 
-import android.app.ActionBar.LayoutParams
 import android.content.Intent
 import android.os.Bundle
 import android.view.Gravity
