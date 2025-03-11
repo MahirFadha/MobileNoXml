@@ -11,8 +11,6 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import android.graphics.Typeface
 import android.widget.ImageView
-import androidx.compose.material3.Text
-import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.widget.ConstraintLayout

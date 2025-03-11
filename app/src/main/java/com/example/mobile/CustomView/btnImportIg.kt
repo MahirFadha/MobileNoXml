@@ -31,8 +31,7 @@ class btnImportIg(
         iconTint = null
         setTypeface(null, Typeface.BOLD)
         layoutParams = ConstraintLayout.LayoutParams(
-            900,
-            ConstraintLayout.LayoutParams.WRAP_CONTENT
+            900, 180
         )
 
 //        background = ContextCompat.getDrawable(context, R.drawable.bg_btn_login)
