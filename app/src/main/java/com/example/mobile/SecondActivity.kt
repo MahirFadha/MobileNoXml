@@ -10,12 +10,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import android.graphics.Typeface
+import android.view.Gravity
 import android.widget.ImageView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import com.example.mobile.CustomView.btnImportIg
 import com.example.mobile.ui.theme.MobileTheme
 
 class SecondActivity : ComponentActivity(){
@@ -155,6 +157,10 @@ fun IsiProfil() {
                 layoutParams = LayoutParams(800,1)
             }
 
+            val btnimport = btnImportIg(context).apply {
+                id = View.generateViewId()
+            }
+
             layout.addView(btnBack)
             layout.addView(btnNext)
             layout.addView(header)
@@ -170,6 +176,7 @@ fun IsiProfil() {
             layout.addView(link)
             layout.addView(tambahlink)
             layout.addView(line3)
+            layout.addView(btnimport)
 
             val constraintSet = ConstraintSet()
             constraintSet.clone(layout)
@@ -222,6 +229,10 @@ fun IsiProfil() {
             constraintSet.connect(line3.id, ConstraintSet.TOP, tambahlink.id, ConstraintSet.TOP,100)
             constraintSet.connect(line3.id, ConstraintSet.START, bgProfil.id, ConstraintSet.START,48)
 
+            constraintSet.connect(btnimport.id, ConstraintSet.TOP, bgProfil.id, ConstraintSet.BOTTOM,40)
+            constraintSet.connect(btnimport.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            constraintSet.connect(btnimport.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+
 
             constraintSet.applyTo(layout)
             layout
@@ -231,7 +242,7 @@ fun IsiProfil() {
 
 @Preview(showBackground = true)
 @Composable
-fun greetingPreview(){
+fun PreviewSecond(){
     MobileTheme {
         IsiProfil()
     }

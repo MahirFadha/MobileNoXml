@@ -10,12 +10,15 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import android.graphics.Typeface
-import android.view.Gravity
+import android.widget.ImageView
+import androidx.compose.material3.Text
+import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
+import com.example.mobile.CustomView.btnContinue
 import com.example.mobile.ui.theme.MobileTheme
 
 class ThirdActivity : ComponentActivity(){
@@ -71,10 +74,84 @@ fun Privasi(){
                 layoutParams = LayoutParams(800,90)
             }
 
+            val btnatas = ImageView(context).apply{
+                id = View.generateViewId()
+                setImageResource(R.drawable.bg_button_privacy_putih)
+                layoutParams = LayoutParams(900,300)
+            }
+
+            val btnbawah = ImageView(context).apply{
+                id = View.generateViewId()
+                setImageResource(R.drawable.bg_btn_login)
+                layoutParams = LayoutParams(900,300)
+                alpha = 0.6f
+            }
+
+            val publicprofil = TextView(context).apply{
+                id = View.generateViewId()
+                text = "Public profile"
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                setTypeface(null, Typeface.BOLD)
+                textSize = 14f
+            }
+
+            val publicdesc = TextView(context).apply{
+                id = View.generateViewId()
+                text = "Anyone or on off Threads can see, share and interact with your content"
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                textSize = 14f
+                width = 760
+            }
+
+            val dunia = ImageView(context).apply{
+                id = View.generateViewId()
+                setImageResource(R.drawable.earth_icon)
+                layoutParams = LayoutParams(60,60)
+            }
+
+            val privateprofil = TextView(context).apply{
+                id = View.generateViewId()
+                text = "Private profile"
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                setTypeface(null, Typeface.BOLD)
+                textSize = 14f
+                alpha = 0.4f
+            }
+
+            val privatedesc = TextView(context).apply{
+                id = View.generateViewId()
+                text = "Only your approved followers can see, share and interact with yor content"
+                setTextColor(ContextCompat.getColor(context, R.color.white))
+                textSize = 14f
+                width = 760
+                alpha = 0.4f
+            }
+
+            val kunci = ImageView(context).apply{
+                id = View.generateViewId()
+                setImageResource(R.drawable.icon_pw)
+                layoutParams = LayoutParams(60,60)
+                alpha = 0.4f
+            }
+
+            val btnContinue = btnContinue(context).apply{
+                id = View.generateViewId()
+            }
+
 
             layout.addView(btnBack)
             layout.addView(textprivasi)
             layout.addView(textduwa)
+            layout.addView(btnatas)
+            layout.addView(btnbawah)
+            layout.addView(publicprofil)
+            layout.addView(publicdesc)
+            layout.addView(dunia)
+            layout.addView(privateprofil)
+            layout.addView(privatedesc)
+            layout.addView(kunci)
+            layout.addView(btnContinue)
+
 
             val constraintSet = ConstraintSet()
             constraintSet.clone(layout)
@@ -89,6 +166,38 @@ fun Privasi(){
             constraintSet.connect(textduwa.id, ConstraintSet.TOP, textprivasi.id, ConstraintSet.BOTTOM,20)
             constraintSet.connect(textduwa.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             constraintSet.connect(textduwa.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+
+            constraintSet.connect(btnatas.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            constraintSet.connect(btnatas.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            constraintSet.connect(btnatas.id, ConstraintSet.TOP, textduwa.id, ConstraintSet.BOTTOM, 380)
+
+            constraintSet.connect(btnbawah.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            constraintSet.connect(btnbawah.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+            constraintSet.connect(btnbawah.id, ConstraintSet.TOP, btnatas.id, ConstraintSet.BOTTOM, 80)
+
+            constraintSet.connect(publicprofil.id, ConstraintSet.TOP, btnatas.id, ConstraintSet.TOP, 60)
+            constraintSet.connect(publicprofil.id, ConstraintSet.START, btnatas.id, ConstraintSet.START,60)
+
+            constraintSet.connect(publicdesc.id, ConstraintSet.TOP, publicprofil.id, ConstraintSet.BOTTOM,20)
+            constraintSet.connect(publicdesc.id, ConstraintSet.START, btnatas.id, ConstraintSet.START,60)
+
+            constraintSet.connect(dunia.id, ConstraintSet.TOP, btnatas.id, ConstraintSet.TOP,56)
+            constraintSet.connect(dunia.id, ConstraintSet.END, btnatas.id, ConstraintSet.END,90)
+
+            constraintSet.connect(privateprofil.id, ConstraintSet.TOP, btnbawah.id, ConstraintSet.TOP,60)
+            constraintSet.connect(privateprofil.id, ConstraintSet.START, btnbawah.id, ConstraintSet.START,60)
+
+            constraintSet.connect(privatedesc.id, ConstraintSet.TOP, privateprofil.id, ConstraintSet.BOTTOM,20)
+            constraintSet.connect(privatedesc.id, ConstraintSet.START, btnbawah.id, ConstraintSet.START,60)
+
+            constraintSet.connect(kunci.id, ConstraintSet.TOP, btnbawah.id, ConstraintSet.TOP,56)
+            constraintSet.connect(kunci.id, ConstraintSet.END, btnbawah.id, ConstraintSet.END,90)
+
+            constraintSet.connect(btnContinue.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM, 20)
+            constraintSet.connect(btnContinue.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
+            constraintSet.connect(btnContinue.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
+
+
 
             constraintSet.applyTo(layout)
             layout
