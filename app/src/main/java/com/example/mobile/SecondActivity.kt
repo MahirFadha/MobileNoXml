@@ -10,6 +10,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import android.graphics.Typeface
+import android.text.TextUtils
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
@@ -104,6 +106,20 @@ fun IsiProfil() {
                 layoutParams = LayoutParams(50,50)
             }
 
+            val name = EditText(context).apply {
+                id = View.generateViewId()
+                hint = "Name"
+                textSize = 14f
+                background = null
+                ellipsize = TextUtils.TruncateAt.END
+                maxLines = 1
+                setHintTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                layoutParams = ConstraintLayout.LayoutParams(
+                    600,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
+            }
+
             val line1 = View(context).apply {
                 id = View.generateViewId()
                 setBackgroundColor(ContextCompat.getColor(context,R.color.lightgray))
@@ -124,10 +140,19 @@ fun IsiProfil() {
                 setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
-            val tulisbio = TextView(context).apply{
+            val tulisbio = EditText(context).apply{
                 id = View.generateViewId()
-                text = "+ Write Bio"
-                setTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                hint = "+ Write Bio"
+                textSize = 14f
+                ellipsize = TextUtils.TruncateAt.END
+                background = null
+                maxLines = 1
+                setHintTextColor(ContextCompat.getColor(context, R.color.lightgray))
+//                setTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                layoutParams = ConstraintLayout.LayoutParams(
+                    800,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
             }
 
             val line2 = View(context).apply {
@@ -144,10 +169,20 @@ fun IsiProfil() {
                 setTextColor(ContextCompat.getColor(context, R.color.white))
             }
 
-            val tambahlink = TextView(context).apply{
+            val tambahlink = EditText(context).apply{
                 id = View.generateViewId()
-                text = "+ Add link"
+                width = 200
+                hint = "+ Add link"
+                textSize = 14f
+                background = null
+                maxLines = 1
+                ellipsize = TextUtils.TruncateAt.END
+                setHintTextColor(ContextCompat.getColor(context, R.color.lightgray))
                 setTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                layoutParams = ConstraintLayout.LayoutParams(
+                    800,
+                    ConstraintLayout.LayoutParams.WRAP_CONTENT
+                )
             }
 
             val line3 = View(context).apply {
@@ -168,6 +203,7 @@ fun IsiProfil() {
             layout.addView(profil)
             layout.addView(iconpw)
             layout.addView(addphoto)
+            layout.addView(name)
             layout.addView(line1)
             layout.addView(bio)
             layout.addView(tulisbio)
@@ -206,6 +242,9 @@ fun IsiProfil() {
 
             constraintSet.connect(line1.id, ConstraintSet.TOP, iconpw.id, ConstraintSet.TOP,100)
             constraintSet.connect(line1.id, ConstraintSet.START, bgProfil.id, ConstraintSet.START,48)
+
+            constraintSet.connect(name.id, ConstraintSet.TOP, profil.id, ConstraintSet.TOP,80)
+            constraintSet.connect(name.id, ConstraintSet.START, iconpw.id, ConstraintSet.START,60)
 
             constraintSet.connect(addphoto.id, ConstraintSet.TOP, bgProfil.id, ConstraintSet.TOP,50)
             constraintSet.connect(addphoto.id, ConstraintSet.END, bgProfil.id, ConstraintSet.END,60)
