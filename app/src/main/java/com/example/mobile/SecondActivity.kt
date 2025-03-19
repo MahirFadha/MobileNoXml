@@ -20,10 +20,28 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.example.mobile.CustomView.btnImportIg
 import com.example.mobile.ui.theme.MobileTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.sql.Connection
+import java.sql.ResultSet
+import java.sql.Statement
 
 class SecondActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        GlobalScope.launch(Dispatchers.IO) {
+            val connection = DatabaseConnection.connection()
+            if (connection != null) {
+                val data = fetchData(connection)
+                withContext(Dispatchers.Main) {
+                    println("Data dari database: $data")
+                }
+            } else {
+                println("Koneksi gagal")
+            }
+        }
         setContent {
             MobileTheme {
                 IsiProfil()
@@ -31,6 +49,24 @@ class SecondActivity : ComponentActivity(){
         }
     }
 }
+private  fun fetchData(connection: Connection): List<String>{
+    val resultList = mutableListOf<String>()
+    try {
+        val statement: Statement = connection.createStatement()
+        val resultSet: ResultSet = statement.executeQuery("SELECT * FROM account")
+
+        while (resultSet.next()){
+            val data = resultSet.getString("username")
+            resultList.add(data)
+        }
+        resultSet.close()
+        statement.close()
+    }catch (e: Exception){
+        e.printStackTrace()
+    }
+    return resultList
+}
+
 
 @Composable
 fun IsiProfil() {
