@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.kotlin.coroutines.android)
+    implementation(libs.kotlin.coroutines.core)
     implementation(libs.material)
     implementation(libs.postgresql)
     implementation(libs.androidx.material3)

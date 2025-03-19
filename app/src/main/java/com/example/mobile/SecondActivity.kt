@@ -13,6 +13,7 @@ import android.graphics.Typeface
 import android.text.TextUtils
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -20,51 +21,30 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import com.example.mobile.CustomView.btnImportIg
 import com.example.mobile.ui.theme.MobileTheme
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.sql.Connection
-import java.sql.ResultSet
-import java.sql.Statement
+import java.sql.SQLException
 
 class SecondActivity : ComponentActivity(){
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        GlobalScope.launch(Dispatchers.IO) {
-            val connection = DatabaseConnection.connection()
-            if (connection != null) {
-                val data = fetchData(connection)
-                withContext(Dispatchers.Main) {
-                    println("Data dari database: $data")
-                }
-            } else {
-                println("Koneksi gagal")
-            }
-        }
         setContent {
             MobileTheme {
                 IsiProfil()
             }
         }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val connection = DatabaseConnection.connection()
+//            if (connection != null) {
+//                    println("Koneksi Berhasil")
+//            } else {
+//                println("Koneksi gagal")
+//            }
+//        }
     }
-}
-private  fun fetchData(connection: Connection): List<String>{
-    val resultList = mutableListOf<String>()
-    try {
-        val statement: Statement = connection.createStatement()
-        val resultSet: ResultSet = statement.executeQuery("SELECT * FROM account")
-
-        while (resultSet.next()){
-            val data = resultSet.getString("username")
-            resultList.add(data)
-        }
-        resultSet.close()
-        statement.close()
-    }catch (e: Exception){
-        e.printStackTrace()
-    }
-    return resultList
 }
 
 
@@ -101,11 +81,6 @@ fun IsiProfil() {
                     90,
                     90
                 )
-            }
-
-            btnNext.setOnClickListener{
-                val next = Intent(context, ThirdActivity::class.java)
-                context.startActivity(next)
             }
 
             val header = TextView(context).apply {
@@ -150,6 +125,7 @@ fun IsiProfil() {
                 ellipsize = TextUtils.TruncateAt.END
                 maxLines = 1
                 setHintTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                setTextColor(ContextCompat.getColor(context, R.color.lightgray))
                 layoutParams = ConstraintLayout.LayoutParams(
                     600,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -179,12 +155,13 @@ fun IsiProfil() {
             val tulisbio = EditText(context).apply{
                 id = View.generateViewId()
                 hint = "+ Write Bio"
+                width = 200
                 textSize = 14f
                 ellipsize = TextUtils.TruncateAt.END
                 background = null
                 maxLines = 1
                 setHintTextColor(ContextCompat.getColor(context, R.color.lightgray))
-//                setTextColor(ContextCompat.getColor(context, R.color.lightgray))
+                setTextColor(ContextCompat.getColor(context, R.color.lightgray))
                 layoutParams = ConstraintLayout.LayoutParams(
                     800,
                     ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -307,6 +284,19 @@ fun IsiProfil() {
             constraintSet.connect(btnimport.id, ConstraintSet.START, ConstraintSet.PARENT_ID, ConstraintSet.START)
             constraintSet.connect(btnimport.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.END)
 
+
+            btnNext.setOnClickListener{
+                if (name.text.isNotEmpty() && tulisbio.text.isNotEmpty() && tambahlink.text.isNotEmpty()){
+                    val Nama = name.text.toString()
+                    val Bio = tulisbio.text.toString()
+                    val Link = tambahlink.text.toString()
+                    insertData(Nama,Bio,Link)
+                    val next = Intent(context, ThirdActivity::class.java)
+                    context.startActivity(next)
+                }else{
+                    Toast.makeText(context, "Isi semua data dengan benar", Toast.LENGTH_SHORT).show()
+                }
+            }
 
             constraintSet.applyTo(layout)
             layout
