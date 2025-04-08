@@ -36,14 +36,14 @@ class SecondActivity : ComponentActivity(){
                 IsiProfil()
             }
         }
-//        GlobalScope.launch(Dispatchers.IO) {
-//            val connection = DatabaseConnection.connection()
-//            if (connection != null) {
-//                    println("Koneksi Berhasil")
-//            } else {
-//                println("Koneksi gagal")
-//            }
-//        }
+        GlobalScope.launch(Dispatchers.IO) {
+            val connection = DatabaseConnection.connection()
+            if (connection != null) {
+                    println("Koneksi Berhasil")
+            } else {
+                println("Koneksi gagal")
+            }
+        }
     }
 }
 
